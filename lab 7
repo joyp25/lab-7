@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void swap(int *x, int *y) {
+    int temp = *x; 
+    *x = *y;
+    *y = temp;
+}
+
+void bubbleSort(int arr[], int n, int swaps[]) {
+    int total_swaps = 0;
+    for (int i = 0; i < n-1; i++) {
+        int count = 0;
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j+1] < arr[j]) {
+                swap(&arr[j+1], &arr[j]);
+                count++;
+                swaps[arr[j]]++;
+                swaps[arr[j + 1]]++;
+            }
+        }
+        if (count > 0) {
+            printf("%d: %d swaps\n", arr[n - i - 1], count);
+            total_swaps += count;
+        }
+    }
+    printf("Total swaps: %d\n", total_swaps);
+}
+
+
+void selectionSort(int arr[], int n, int swaps[]) {
+    int total_swaps = 0;
+    for (int i = 0; i < n - 1; i++) {
+        int min_idx = i;
+        for (int j = i + 1; j < n; j++) {
+            if (arr[j] < arr[min_idx]) {
+                min_idx = j;
+                swaps[arr[min_idx]]++;
+                swaps[arr[i]]++;
+            }
+        }
+        if (min_idx != i) {
+            swap(&arr[min_idx], &arr[i]);
+            total_swaps++;
+            printf("%d: %d swaps\n", arr[i], total_swaps);
+        }
+    }
+    printf("Total swaps: %d\n", total_swaps);
+}
+
+
+int main() {
+    int arr1[] = {97, 16, 45, 63, 13, 22, 7, 58, 72};
+    int arr2[] = {90, 80, 70, 60, 50, 40, 30, 20, 10};
+    
+    int swaps1[100] = {0};
+    int swaps2[100] = {0};
+    
+    printf("Array 1:\n");
+    bubbleSort(arr1, 9, swaps1);
+    printf("\nArray 2:\n");
+    selectionSort(arr2, 9, swaps2);
+    
+    return 0;
+}
